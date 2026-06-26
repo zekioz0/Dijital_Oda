@@ -31,7 +31,7 @@ const TerminalProfileMenu = () => {
         <button className="status-badge" style={{ background: activeTab === 'skills' ? '#5e5ce6' : '#222', color: '#fff', cursor: 'pointer', border: 'none', padding: '6px 12px' }} onClick={() => setActiveTab('skills')}>Yetenekler</button>
         <button className="status-badge" style={{ background: '#222', color: '#fff', cursor: 'pointer', border: '1px solid #5e5ce6', padding: '5px 11px' }} onClick={() => window.open('https://github.com/zekioz0', '_blank')}>GitHub ↗</button>
       </div>
-      
+
       <div style={{ color: '#ccc', fontSize: '0.95rem', lineHeight: '1.6', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid #5e5ce6' }}>
         {activeTab === 'about' && (
           <div>
@@ -40,26 +40,26 @@ const TerminalProfileMenu = () => {
         )}
         {activeTab === 'edu' && (
           <div>
-            🎓 <b>Bilgisayar Mühendisliği (2. Sınıf)</b><br/>
+            🎓 <b>Bilgisayar Mühendisliği (2. Sınıf)</b><br />
             Teorik temelleri pratikle buluşturduğum bir eğitim süreci. Özellikle algoritmalar, gömülü sistemler ve yazılım mimarileri üzerine yoğunlaşıyorum. Sürekli öğrenme ve kendini geliştirme felsefesine inanıyorum.
           </div>
         )}
         {activeTab === 'skills' && (
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
             <div>
-              <b style={{color: '#ff9f0a'}}>Frontend:</b><br/>React.js, JavaScript, Modern CSS
+              <b style={{ color: '#ff9f0a' }}>Frontend:</b><br />React.js, JavaScript, Modern CSS
             </div>
             <div>
-              <b style={{color: '#32d74b'}}>Backend:</b><br/>Python, Java, Spring Boot, C#
+              <b style={{ color: '#32d74b' }}>Backend:</b><br />Python, Java, Spring Boot, C#
             </div>
             <div>
-              <b style={{color: '#0a84ff'}}>Sistem & Ağ:</b><br/>Bilgisayar Ağları, OS Mimarisi
+              <b style={{ color: '#0a84ff' }}>Sistem & Ağ:</b><br />Bilgisayar Ağları, OS Mimarisi
             </div>
             <div>
-              <b style={{color: '#ff375f'}}>Donanım:</b><br/>Arduino, ESP32, Lojik Devreler
+              <b style={{ color: '#ff375f' }}>Donanım:</b><br />Arduino, ESP32, Lojik Devreler
             </div>
             <div style={{ gridColumn: 'span 2', marginTop: '5px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-              <b style={{color: '#bf5af2'}}>Tasarım & Hobiler:</b><br/>Blender 3D Modelleme, Gelişmiş UI/UX Tasarım, Calisthenics, Boks
+              <b style={{ color: '#bf5af2' }}>Tasarım & Hobiler:</b><br />Blender 3D Modelleme, Gelişmiş UI/UX Tasarım, Calisthenics, Boks
             </div>
           </div>
         )}
@@ -548,9 +548,17 @@ function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [introStep, setIntroStep] = useState(0);
 
+  // Easter Egg for the teacher
+  useEffect(() => {
+    console.log(
+      "%c Sistemin mimarisi ve kedinin sinir katsayısı özenle ayarlandı. İyi okumalar! :) ",
+      "background: #141419; color: #32d74b; font-size: 14px; font-weight: bold; border-radius: 4px; padding: 10px; border: 1px solid #32d74b;"
+    );
+  }, []);
+
   // Advanced Audio State
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.1);
+  const [volume, setVolume] = useState(0.2);
   const audioRef = useRef(null);
 
   // Parallax & Environment State
@@ -559,6 +567,10 @@ function App() {
 
   // Cat Petting State
   const [isPetting, setIsPetting] = useState(false);
+  const [catMessage, setCatMessage] = useState("");
+  const petTimeoutRef = useRef(null);
+  const clickCountRef = useRef(0);
+  const lastClickTimeRef = useRef(0);
 
   const handleMouseMove = (e) => {
     if (!roomRef.current) return;
@@ -570,13 +582,60 @@ function App() {
 
   const handlePetCat = (e) => {
     e.stopPropagation();
-    if (isPetting) return;
+
+    const now = Date.now();
+    const timeSinceLastClick = now - lastClickTimeRef.current;
+    lastClickTimeRef.current = now;
+
+    // Ard arda tıklama kontrolü (3.5 saniyeden kısa aralıklarla tıklanırsa arka arkaya sayılır)
+    if (timeSinceLastClick < 3500) {
+      clickCountRef.current += 1;
+    } else {
+      clickCountRef.current = 1;
+    }
+
     setIsPetting(true);
 
-    // Gelişmiş sevme animasyonu süresi (3 saniye)
-    setTimeout(() => {
+    const normalMessages = [
+      "Mrrrr... 😻",
+      "Mrrrr... 😻",
+      "Miyav! 🐾",
+      "Zzz... Hı? Ne oldu?",
+      "Patilerime dokunma.",
+      "Hoşgeldin, çalışıyor muyuz?"
+    ];
+
+    const angryMessages = [
+      "Yeter da, git kod yaz!",
+      "Dikkatimi dağıtıyorsun, uyuyacağım.",
+      "Kafamı çok sevdin, kel kalacağım.",
+      "Bak tırmalarım ha...",
+      "Klavyene oturmamı mı istiyorsun?",
+      "Mama kabım boş, seveceğine mama ver!",
+      "Beni sal, ekrana bak sen.",
+      "SABRIM TAŞIYOR... 😼"
+    ];
+
+    const isSpam = clickCountRef.current >= 4;
+    // Spam atılırsa kesinlikle sinirli, normal tıklamada ise %30 ihtimalle sinirli tepki verir (Kedi sonuçta :D)
+    const showAngryMessage = isSpam || Math.random() < 0.3;
+
+    if (showAngryMessage) {
+      setCatMessage(angryMessages[Math.floor(Math.random() * angryMessages.length)]);
+    } else {
+      setCatMessage(normalMessages[Math.floor(Math.random() * normalMessages.length)]);
+    }
+
+    // Önceki zamanlayıcıyı iptal et (animasyon ve mesaj hemen gitmesin diye)
+    if (petTimeoutRef.current) {
+      clearTimeout(petTimeoutRef.current);
+    }
+
+    petTimeoutRef.current = setTimeout(() => {
       setIsPetting(false);
-    }, 3000);
+      setCatMessage("");
+      clickCountRef.current = 0;
+    }, 2500);
   };
 
   useEffect(() => {
@@ -858,7 +917,11 @@ function App() {
               <div className="hud-box cat-area" onClick={handlePetCat}>
                 <span className="hud-icon">🐈</span>
                 <div className="cat-name-tag">🐾 Açgöz</div>
-                <div className="hud-label">Sevmek için tıkla</div>
+                {catMessage && (
+                  <div className="cat-speech-bubble">
+                    {catMessage}
+                  </div>
+                )}
                 {isPetting && (
                   <div className="petting-animation">
                     <span className="hand-emoji">🤚</span>
