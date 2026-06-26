@@ -18,18 +18,52 @@ const defaultHistory = [
 ];
 
 const TerminalProfileMenu = () => {
-  const [activeTab, setActiveTab] = useState(null);
-  
+  const [activeTab, setActiveTab] = useState('about');
+
   return (
-    <div style={{ border: '1px solid #333', padding: '10px', borderRadius: '8px', marginTop: '10px', background: 'rgba(0,0,0,0.5)', fontFamily: 'sans-serif' }}>
-      <div style={{ marginBottom: '10px', color: '#a3be8c', fontFamily: 'monospace' }}>[ ZekiOS - Kullanıcı Profili ]</div>
-      <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
-        <button className="status-badge" style={{ background: '#222', color: '#fff', cursor: 'pointer', border: '1px solid #444' }} onClick={() => setActiveTab('edu')}>Eğitim</button>
-        <button className="status-badge" style={{ background: '#222', color: '#fff', cursor: 'pointer', border: '1px solid #444' }} onClick={() => setActiveTab('skills')}>Uzmanlık</button>
-        <button className="status-badge" style={{ background: '#222', color: '#fff', cursor: 'pointer', border: '1px solid #444' }} onClick={() => window.open('https://github.com/zekioz0', '_blank')}>GitHub</button>
+    <div style={{ border: '1px solid #444', padding: '15px', borderRadius: '12px', marginTop: '10px', background: 'rgba(20, 20, 25, 0.8)', fontFamily: 'sans-serif', boxShadow: '0 10px 30px rgba(0,0,0,0.5)' }}>
+      <div style={{ marginBottom: '15px', color: '#32d74b', fontFamily: 'monospace', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
+        <span style={{ fontSize: '1.2rem' }}>⚡</span> [ ZekiOS - Kullanıcı Profili ]
       </div>
-      {activeTab === 'edu' && <div style={{ marginTop: '10px', color: '#ccc', fontSize: '0.9rem', lineHeight: '1.4' }}>Bilgisayar Mühendisliği 2. Sınıf öğrencisiyim. Karmaşık sistemleri tasarlamayı ve yazılım/donanım bütünleşik projeler geliştirmeyi seviyorum.</div>}
-      {activeTab === 'skills' && <div style={{ marginTop: '10px', color: '#ccc', fontSize: '0.9rem', lineHeight: '1.4' }}>Frontend: React, JS, CSS<br/>Backend: Python, Java, C#<br/>Donanım: Lojik Kapılar, Arduino, ESP32</div>}
+      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '15px' }}>
+        <button className="status-badge" style={{ background: activeTab === 'about' ? '#5e5ce6' : '#222', color: '#fff', cursor: 'pointer', border: 'none', padding: '6px 12px' }} onClick={() => setActiveTab('about')}>Hakkımda</button>
+        <button className="status-badge" style={{ background: activeTab === 'edu' ? '#5e5ce6' : '#222', color: '#fff', cursor: 'pointer', border: 'none', padding: '6px 12px' }} onClick={() => setActiveTab('edu')}>Eğitim</button>
+        <button className="status-badge" style={{ background: activeTab === 'skills' ? '#5e5ce6' : '#222', color: '#fff', cursor: 'pointer', border: 'none', padding: '6px 12px' }} onClick={() => setActiveTab('skills')}>Yetenekler</button>
+        <button className="status-badge" style={{ background: '#222', color: '#fff', cursor: 'pointer', border: '1px solid #5e5ce6', padding: '5px 11px' }} onClick={() => window.open('https://github.com/zekioz0', '_blank')}>GitHub ↗</button>
+      </div>
+      
+      <div style={{ color: '#ccc', fontSize: '0.95rem', lineHeight: '1.6', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid #5e5ce6' }}>
+        {activeTab === 'about' && (
+          <div>
+            Merhaba, ben Zeki! Yazılım geliştirmeyi bir işten çok <b>"inşa etme sanatı"</b> olarak görüyorum. Sadece kod yazmakla kalmıyor; sistem mimarileri kurgulamayı, verimliliği artırmayı ve hem yazılım hem de donanım dünyasını bir araya getiren projelere kafa yormayı seviyorum.
+          </div>
+        )}
+        {activeTab === 'edu' && (
+          <div>
+            🎓 <b>Bilgisayar Mühendisliği (2. Sınıf)</b><br/>
+            Teorik temelleri pratikle buluşturduğum bir eğitim süreci. Özellikle algoritmalar, gömülü sistemler ve yazılım mimarileri üzerine yoğunlaşıyorum. Sürekli öğrenme ve kendini geliştirme felsefesine inanıyorum.
+          </div>
+        )}
+        {activeTab === 'skills' && (
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
+            <div>
+              <b style={{color: '#ff9f0a'}}>Frontend:</b><br/>React.js, JavaScript, Modern CSS
+            </div>
+            <div>
+              <b style={{color: '#32d74b'}}>Backend:</b><br/>Python, Java, Spring Boot, C#
+            </div>
+            <div>
+              <b style={{color: '#0a84ff'}}>Sistem & Ağ:</b><br/>Bilgisayar Ağları, OS Mimarisi
+            </div>
+            <div>
+              <b style={{color: '#ff375f'}}>Donanım:</b><br/>Arduino, ESP32, Lojik Devreler
+            </div>
+            <div style={{ gridColumn: 'span 2', marginTop: '5px', paddingTop: '10px', borderTop: '1px solid rgba(255,255,255,0.1)' }}>
+              <b style={{color: '#bf5af2'}}>Tasarım & Hobiler:</b><br/>Blender 3D Modelleme, Gelişmiş UI/UX Tasarım, Calisthenics, Boks
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -169,7 +203,7 @@ const TerminalComponent = () => {
 const LogicGateSim = () => {
   const [inputA, setInputA] = useState(false);
   const [inputB, setInputB] = useState(false);
-  
+
   const sum = inputA !== inputB; // XOR gate
   const carry = inputA && inputB; // AND gate
 
@@ -260,10 +294,11 @@ const MediaShelf = () => {
       { title: "Indie & Sandbox", desc: "Stardew Valley, Terraria, Minecraft. Bazen sadece kafa dinlemek ve kendi küçük çiftliğimi/kalemi kurmak için.", icon: "🌾" }
     ],
     hobbies: [
-      { title: "Elektronik & Donanım", desc: "Mikrodenetleyiciler, lojik kapılar ve lehim kokusuyla geçen üretken saatler.", icon: "⚙️" },
-      { title: "Yaratıcı Kodlama", desc: "Sadece çalışması için değil, sanatsal bir ifade ve estetik biçimi olarak kod yazmak.", icon: "🎨" },
-      { title: "Retro Koleksiyonu", desc: "Nostaljik teknolojiler, eski oyun konsolları veya fantastik evren figürleri.", icon: "🗃️" },
-      { title: "Elektro Gitar & Müzik", desc: "Megadeth ve Metallica riffleri çalmak, amfi ve analog pedallarla uğraşmak en büyük deşarj yöntemim.", icon: "🎸" }
+      { title: "Blender 3D & Çizim", desc: "Hayal gücümü ekrana aktarıyorum. Blender ile 3D modelleme yapmak ve boş zamanlarımda çizimle uğraşmak büyük bir zevk.", icon: "🎨" },
+      { title: "Lego İnşası", desc: "Parçaları birleştirip karmaşık yapılar ortaya çıkarmak, hem odaklanmamı sağlıyor hem de zihnim için harika bir terapi.", icon: "🧱" },
+      { title: "Warhammer Evreni", desc: "Warhammer'ın o devasa, gotik ve karanlık lore'una (hikayesine) dalmak, saatlerce o evreni araştırmak favorim.", icon: "⚔️" },
+      { title: "Gitar & Müzik", desc: "Elektro gitar çalmak, rifflerle uğraşmak ve müziğin matematiğinde kaybolmak en büyük deşarj yöntemim.", icon: "🎸" },
+      { title: "Elektronik & Donanım", desc: "Mikrodenetleyiciler, lojik kapılar ve lehim kokusuyla geçen üretken saatler.", icon: "⚙️" }
     ],
     academic: [
       { title: "Clean Code - Robert C. Martin", desc: "Sadece çalışan değil, okunabilir ve sürdürülebilir kod yazma felsefesi.", icon: "📘" },
@@ -367,16 +402,31 @@ const CoffeeRoutine = () => {
 const PomodoroTimer = () => {
   const [time, setTime] = useState(25 * 60);
   const [isActive, setIsActive] = useState(false);
+  const [selectedDuration, setSelectedDuration] = useState(25);
+  const [customMins, setCustomMins] = useState("");
 
   useEffect(() => {
     let interval = null;
     if (isActive && time > 0) {
       interval = setInterval(() => setTime(t => t - 1), 1000);
-    } else if (!isActive && time !== 25 * 60) {
+    } else if (!isActive) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
   }, [isActive, time]);
+
+  const setTimer = (mins) => {
+    if (!mins || isNaN(mins) || mins <= 0) return;
+    setIsActive(false);
+    setSelectedDuration(mins);
+    setTime(mins * 60);
+    setCustomMins("");
+  };
+
+  const handleCustomSubmit = (e) => {
+    e.preventDefault();
+    setTimer(parseInt(customMins));
+  };
 
   const mins = Math.floor(time / 60).toString().padStart(2, '0');
   const secs = (time % 60).toString().padStart(2, '0');
@@ -384,11 +434,30 @@ const PomodoroTimer = () => {
   return (
     <div className="pomodoro">
       <div className="timer-display">{mins}:{secs}</div>
-      <div className="timer-controls">
-        <button className="timer-btn" onClick={() => setIsActive(!isActive)}>{isActive ? 'Durdur' : 'Odaklanmayı Başlat'}</button>
-        <button className="timer-btn reset" onClick={() => { setIsActive(false); setTime(25 * 60); }}>Sıfırla</button>
+      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '15px' }}>
+        <button className="status-badge" style={{ background: selectedDuration === 25 ? '#5e5ce6' : '#222', color: '#fff', cursor: 'pointer', border: 'none' }} onClick={() => setTimer(25)}>25 dk (Klasik)</button>
+        <button className="status-badge" style={{ background: selectedDuration === 50 ? '#ff9f0a' : '#222', color: '#fff', cursor: 'pointer', border: 'none' }} onClick={() => setTimer(50)}>50 dk (Derin)</button>
+        <button className="status-badge" style={{ background: selectedDuration === 5 ? '#32d74b' : '#222', color: '#fff', cursor: 'pointer', border: 'none' }} onClick={() => setTimer(5)}>5 dk (Mola)</button>
+        <button className="status-badge" style={{ background: selectedDuration === 10 ? '#30b0c7' : '#222', color: '#fff', cursor: 'pointer', border: 'none' }} onClick={() => setTimer(10)}>10 dk (Mola)</button>
+        <form onSubmit={handleCustomSubmit} style={{ display: 'flex', gap: '5px', background: 'rgba(255, 255, 255, 0.05)', padding: '3px', borderRadius: '16px', border: '1px solid rgba(255, 255, 255, 0.1)' }}>
+          <input
+            type="number"
+            value={customMins}
+            onChange={(e) => setCustomMins(e.target.value)}
+            placeholder="dk"
+            style={{ width: '45px', background: 'transparent', border: 'none', color: '#fff', padding: '2px 8px', outline: 'none', fontSize: '0.85rem', textAlign: 'center', fontWeight: '500' }}
+            min="1"
+          />
+          <button type="submit" style={{ background: 'rgba(94, 92, 230, 0.8)', color: '#fff', cursor: 'pointer', border: 'none', padding: '4px 14px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: '600', transition: 'all 0.2s' }} onMouseEnter={(e) => { e.currentTarget.style.background = '#5e5ce6'; e.currentTarget.style.transform = 'scale(1.05)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(94, 92, 230, 0.8)'; e.currentTarget.style.transform = 'scale(1)'; }}>
+            Kur
+          </button>
+        </form>
       </div>
-      <p className="timer-desc">Mental dayanıklılık ve "Deep Work" (Derin Odaklanma) seansları için Pomodoro sayacı.</p>
+      <div className="timer-controls">
+        <button className="timer-btn" onClick={() => setIsActive(!isActive)}>{isActive ? 'Durdur' : 'Başlat'}</button>
+        <button className="timer-btn reset" onClick={() => setTimer(selectedDuration)}>Sıfırla</button>
+      </div>
+      <p className="timer-desc">Farklı odaklanma seviyelerine göre tasarlanmış süre ölçer. Özel süre de ayarlayabilirsiniz.</p>
     </div>
   );
 };
@@ -402,27 +471,27 @@ const LiveClock = () => {
   return <div className="live-clock"><Clock size={14} /> {time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}</div>;
 };
 
-const PunchingBagGame = () => {
+const PunchingBagGame = ({ onClose }) => {
   const [hits, setHits] = useState(0);
   const [isPunching, setIsPunching] = useState(false);
 
-  const handlePunch = () => {
+  const handlePunch = (e) => {
+    e.stopPropagation();
     setHits(prev => prev + 1);
     setIsPunching(true);
     setTimeout(() => setIsPunching(false), 150);
   };
 
   return (
-    <div className="modern-card center punching-game-card" style={{ padding: '15px', background: 'rgba(200, 50, 50, 0.15)', border: '1px solid rgba(200, 50, 50, 0.4)', cursor: 'pointer', userSelect: 'none', transition: 'all 0.1s' }} onClick={handlePunch} title="Stres atmak için hızlıca tıkla!">
-      <motion.div 
+    <div className="modern-card center punching-game-card" style={{ padding: '15px', background: 'rgba(200, 50, 50, 0.15)', border: '1px solid rgba(200, 50, 50, 0.4)', cursor: 'pointer', userSelect: 'none', transition: 'all 0.1s', position: 'relative' }} onClick={handlePunch} title="Stres atmak için hızlıca tıkla!">
+      <button onClick={(e) => { e.stopPropagation(); onClose(); }} style={{ position: 'absolute', top: '5px', right: '5px', background: 'transparent', border: 'none', color: '#ff9f9f', cursor: 'pointer', fontSize: '1rem' }}>✖</button>
+      <motion.div
         animate={isPunching ? { rotate: [0, -25, 25, -15, 15, 0], scale: 1.05 } : { rotate: 0, scale: 1 }}
         transition={{ duration: 0.15 }}
         style={{ marginTop: '15px', marginBottom: '15px', display: 'flex', justifyContent: 'center', transformOrigin: 'top center' }}
       >
         <div style={{ position: 'relative', width: '35px', height: '60px', background: '#c0392b', borderRadius: '15px 15px 25px 25px', boxShadow: 'inset -5px -5px 15px rgba(0,0,0,0.5), inset 5px 5px 10px rgba(255,255,255,0.2)' }}>
-          {/* Zincir kısmı */}
           <div style={{ position: 'absolute', top: '-15px', left: '15px', width: '5px', height: '15px', background: '#7f8c8d' }}></div>
-          {/* Torba Detayı (bant) */}
           <div style={{ position: 'absolute', top: '15px', width: '100%', height: '4px', background: 'rgba(0,0,0,0.3)' }}></div>
         </div>
       </motion.div>
@@ -435,17 +504,27 @@ const PunchingBagGame = () => {
 };
 
 const DisciplineRoutine = () => {
+  const [showGame, setShowGame] = useState(false);
+
   return (
     <div className="content-wrapper">
       <PomodoroTimer />
       <div className="modern-card">
         <h3 style={{ marginBottom: '10px' }}>Fiziksel Dayanıklılık</h3>
         <div className="gym-cards">
-          <PunchingBagGame />
-          <div className="modern-card center" style={{ padding: '15px', background: 'rgba(0,0,0,0.4)' }}>
-            <span style={{ fontSize: '2rem', marginBottom: '10px' }}>🤸‍♂️</span>
+          {showGame ? (
+            <PunchingBagGame onClose={() => setShowGame(false)} />
+          ) : (
+            <div className="modern-card center" style={{ padding: '15px', background: 'rgba(200, 50, 50, 0.1)', border: '1px dashed rgba(200, 50, 50, 0.5)', cursor: 'pointer', transition: 'all 0.2s', display: 'flex', flexDirection: 'column', gap: '8px' }} onClick={() => setShowGame(true)} title="Mini Oyunu Başlat!" onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(200, 50, 50, 0.2)'; e.currentTarget.style.transform = 'scale(1.02)'; }} onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(200, 50, 50, 0.1)'; e.currentTarget.style.transform = 'scale(1)'; }}>
+              <span style={{ fontSize: '2rem' }}>🎮🥊</span>
+              <span style={{ fontWeight: 600, color: '#ff9f9f' }}>Boks Antrenmanı</span>
+              <span style={{ fontSize: '0.85rem', color: '#a1a1a6', lineHeight: '1.4' }}>Ağır kum torbası seansları. Refleks, patlayıcı güç ve kodlama sonrası stres atmak için birebir. <br /><br /><span style={{ color: '#ff6b6b' }}>(Mini oyunu oynamak için tıkla!)</span></span>
+            </div>
+          )}
+          <div className="modern-card center" style={{ padding: '15px', background: 'rgba(0,0,0,0.4)', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span style={{ fontSize: '2rem' }}>🤸‍♂️</span>
             <span style={{ fontWeight: 600, color: '#fff' }}>Calisthenics</span>
-            <span style={{ fontSize: '0.8rem', color: '#86868b', marginTop: '5px' }}>Öz Kontrol & İrade</span>
+            <span style={{ fontSize: '0.85rem', color: '#a1a1a6', lineHeight: '1.4' }}>Vücut ağırlığıyla güç inşası. Barfiks, amuda kalkma denemeleri ve limitsiz fiziksel & mental irade kontrolü. Spor salonuna ihtiyaç duymadan sınırları zorlamak.</span>
           </div>
         </div>
       </div>
@@ -471,7 +550,7 @@ function App() {
 
   // Advanced Audio State
   const [isPlaying, setIsPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
+  const [volume, setVolume] = useState(0.1);
   const audioRef = useRef(null);
 
   // Parallax & Environment State
@@ -577,7 +656,7 @@ function App() {
         content: <PosterModalContent />
       };
       case 'postit-learning': return {
-        icon: <Lightbulb size={28} className="modal-icon" style={{color: '#ffd60a'}} />, title: "Şu An Öğreniyorum",
+        icon: <Lightbulb size={28} className="modal-icon" style={{ color: '#ffd60a' }} />, title: "Şu An Öğreniyorum",
         content: (
           <div className="content-wrapper">
             <div className="modern-card" style={{ background: '#ffd60a', color: '#000' }}>
@@ -616,7 +695,7 @@ function App() {
               <p>- Event-Driven microservices</p>
               <p>- REST APIs + WebSockets</p>
               <p>- Redis caching layer</p>
-              <br/>
+              <br />
               <p>Logic Gate Idea:</p>
               <p>[A] --|AND|-- [Q]</p>
               <p>[B] --|   |</p>
@@ -625,11 +704,11 @@ function App() {
         )
       };
       case 'postit-think': return {
-        icon: <Cpu size={28} className="modal-icon" style={{color: '#ff9f0a'}} />, title: "Hatırlatma",
+        icon: <Cpu size={28} className="modal-icon" style={{ color: '#ff9f0a' }} />, title: "Hatırlatma",
         content: (
           <div className="content-wrapper">
             <div className="modern-card center" style={{ background: '#ff9f0a', color: '#000', fontWeight: 'bold', fontSize: '1.2rem' }}>
-              Önce düşün.<br/>Sonra kodla.
+              Önce düşün.<br />Sonra kodla.
             </div>
           </div>
         )
@@ -756,7 +835,7 @@ function App() {
                 <span className="hud-icon">☕</span>
                 <div className="hud-label">☕ Rutin</div>
               </div>
-              
+
               {/* Çevresel Hikaye Anlatımı Alanları */}
               <div className="hud-box story-point postit-learning-area" onClick={() => setActiveModal('postit-learning')}>
                 <span className="hud-icon">📝</span>
