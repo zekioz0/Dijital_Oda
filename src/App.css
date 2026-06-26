@@ -216,7 +216,8 @@ input,
   border-radius: 50%;
   pointer-events: none;
   z-index: 2;
-  transform: translate(-50%, 0) scaleY(0.5); /* Masaya vuruyormuş gibi yassılaştır */
+  transform: translate(-50%, 0) scaleY(0.5);
+  /* Masaya vuruyormuş gibi yassılaştır */
   box-shadow: 0 0 40px 20px rgba(94, 92, 230, 0.2);
 }
 
