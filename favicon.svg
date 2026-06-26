@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8a2be2" />
+      <stop offset="100%" stop-color="#4b0082" />
+    </linearGradient>
+    <filter id="neon">
+      <feGaussianBlur stdDeviation="2" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <path d="M 15 25 L 85 25 L 25 85 L 85 85" fill="none" stroke="#111" stroke-width="24" stroke-linecap="round" stroke-linejoin="miter" />
+  
+  <path d="M 15 20 L 85 20 L 25 80 L 85 80" fill="none" stroke="url(#purpleGrad)" stroke-width="20" stroke-linecap="round" stroke-linejoin="miter" />
+  
+  <path d="M 15 20 L 85 20 L 25 80 L 85 80" fill="none" stroke="#39FF14" stroke-width="4" stroke-linecap="round" stroke-linejoin="miter" filter="url(#neon)" />
+  
+  <circle cx="15" cy="20" r="6" fill="#FF9F0A" />
+  <circle cx="85" cy="20" r="6" fill="#FF9F0A" />
+  <circle cx="25" cy="80" r="6" fill="#FF9F0A" />
+  <circle cx="85" cy="80" r="6" fill="#FF9F0A" />
+  
+  <circle cx="15" cy="20" r="2" fill="#111" />
+  <circle cx="85" cy="20" r="2" fill="#111" />
+  <circle cx="25" cy="80" r="2" fill="#111" />
+  <circle cx="85" cy="80" r="2" fill="#111" />
+</svg>
