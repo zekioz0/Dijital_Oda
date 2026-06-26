@@ -4,7 +4,7 @@ import { Terminal, Code2, Monitor, Dumbbell, Cpu, Database, User, Clock, BookOpe
 import './App.css';
 
 const audioTracks = [
-  { name: "Lofi Vibes", url: "/lofi.mp3" }
+  { name: "Lofi Vibes", url: import.meta.env.BASE_URL + "lofi.mp3" }
 ];
 
 /* ============================
@@ -801,7 +801,7 @@ function App() {
               className={`room-background ${isNightMode ? 'night' : ''}`}
             >
               {/* Odanın temel resmi, arka plan yerine img olarak ekleniyor ki kutu tam şeklini alsın */}
-              <img src="/oda.png" alt="Dijital Oda" className="room-image" />
+              <img src={`${import.meta.env.BASE_URL}oda.png`} alt="Dijital Oda" className="room-image" />
 
               {/* Lightweight CRT & Vignette Effect */}
               <div className="crt-overlay"></div>
