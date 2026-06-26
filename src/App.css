@@ -138,6 +138,7 @@ input,
   align-items: center;
   perspective: 1000px;
   padding: 20px;
+  will-change: transform;
 }
 
 .room-background {
@@ -150,6 +151,7 @@ input,
   transition: transform 0.1s ease-out;
   overflow: hidden;
   display: inline-block;
+  will-change: transform;
   /* İçindeki resme (<img>) tam yapışır, asla siyah boşluk bırakmaz! */
 }
 
@@ -1165,4 +1167,156 @@ input,
 @keyframes popIn {
   0% { opacity: 0; transform: translate(-50%, 10px) scale(0.8); }
   100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+/* Arcade Game Styles */
+.arcade-area {
+  top: 36%;
+  left: 35.5%;
+  width: 40px;
+  height: 40px;
+  background: rgba(191, 90, 242, 0.15);
+  border: 2px solid rgba(191, 90, 242, 0.6);
+  border-radius: 50%;
+  transform: none;
+}
+.arcade-area .hud-icon {
+  font-size: 1.2rem;
+  margin-top: -2px;
+}
+.arcade-area:hover {
+  background: rgba(191, 90, 242, 0.3);
+  box-shadow: 0 0 20px rgba(191, 90, 242, 0.5);
+}
+
+.flappy-game-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 500px;
+  background: #1a1a24;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 4px solid #bf5af2;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.servo-skull {
+  position: absolute;
+  left: 50px;
+  font-size: 30px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s;
+}
+
+.gothic-pipe {
+  position: absolute;
+  width: 50px;
+  background: linear-gradient(to right, #444, #222, #444);
+  border: 2px solid #666;
+  border-radius: 4px;
+}
+.gothic-pipe.top {
+  top: 0;
+  border-top: none;
+}
+.gothic-pipe.bottom {
+  bottom: 0;
+  border-bottom: none;
+}
+
+.game-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  z-index: 10;
+  text-align: center;
+}
+.game-overlay.error {
+  background: rgba(200,0,0,0.4);
+}
+.game-overlay h2 {
+  color: #bf5af2;
+  margin-bottom: 10px;
+}
+.game-overlay.error h2 {
+  color: #ff375f;
+}
+
+.game-score {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+  z-index: 5;
+  font-family: monospace;
+}
+
+.arcade-back-btn {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid #5e5ce6;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+}
+.arcade-back-btn:hover {
+  background: #5e5ce6;
+}
+
+.tyranid-game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.arcade-header {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  align-items: center;
+}
+.arcade-header .game-score {
+  position: relative;
+  top: 0;
+  right: 0;
+}
+.arcade-header .arcade-back-btn {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.start-btn {
+  background: #32d74b;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 8px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.start-btn:hover {
+  background: #28a745;
 }

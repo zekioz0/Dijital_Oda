@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Code2, Monitor, Dumbbell, Cpu, Database, User, Clock, BookOpen, Guitar, X, Volume2, VolumeX, Send, Lightbulb, LightbulbOff, Target } from 'lucide-react';
+import { Code2, Dumbbell, Cpu, User, Clock, BookOpen, X, Volume2, VolumeX, Lightbulb, LightbulbOff, Target } from 'lucide-react';
+import { ArcadeMenu } from './MiniGames';
 import './App.css';
 
 const audioTracks = [
@@ -13,8 +14,8 @@ const audioTracks = [
 
 const defaultHistory = [
   { type: 'system', text: 'ZekiOS v1.0.0 (tty1)' },
-  { type: 'system', text: 'SYSTEM STATUS\nCPU: 99% Motivation\nRAM: Coffee Powered\nCurrent Task: Building Something Cool' },
-  { type: 'system', text: "Sisteme hoş geldiniz. Komutları görmek için 'help' yazın." }
+  { type: 'system', text: 'SYSTEM STATUS\nCPU: 99% Motivation\nRAM: Coffee Powered\nMain Focus: Profile ' },
+  { type: 'system', text: "Diğer komutları görmek için 'help' yazın." }
 ];
 
 const TerminalProfileMenu = () => {
@@ -34,8 +35,18 @@ const TerminalProfileMenu = () => {
 
       <div style={{ color: '#ccc', fontSize: '0.95rem', lineHeight: '1.6', background: 'rgba(0,0,0,0.3)', padding: '12px', borderRadius: '8px', borderLeft: '3px solid #5e5ce6' }}>
         {activeTab === 'about' && (
-          <div>
-            Merhaba, ben Zeki! Yazılım geliştirmeyi bir işten çok <b>"inşa etme sanatı"</b> olarak görüyorum. Sadece kod yazmakla kalmıyor; sistem mimarileri kurgulamayı, verimliliği artırmayı ve hem yazılım hem de donanım dünyasını bir araya getiren projelere kafa yormayı seviyorum.
+          <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+            <div style={{ flexShrink: 0, width: '75px', height: '75px', borderRadius: '50%', overflow: 'hidden', border: '2px solid #5e5ce6', boxShadow: '0 0 15px rgba(94,92,230,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)' }}>
+              <img
+                src={`${import.meta.env.BASE_URL}profil.jpg`}
+                alt="Zeki"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => { e.target.style.display = 'none'; e.target.parentElement.innerHTML = '👤'; e.target.parentElement.style.fontSize = '2rem'; }}
+              />
+            </div>
+            <div>
+              Merhaba, ben Zeki! Yazılım geliştirmeyi bir işten çok <b>"inşa etme sanatı"</b> olarak görüyorum. Sadece kod yazmakla kalmıyor; sistem mimarileri kurgulamayı, verimliliği artırmayı ve hem yazılım hem de donanım dünyasını bir araya getiren projelere kafa yormayı seviyorum.
+            </div>
           </div>
         )}
         {activeTab === 'edu' && (
@@ -139,6 +150,7 @@ const TerminalComponent = () => {
           repos.forEach((repo, i) => {
             response += `${i + 1}. ${repo.name} - 🌟${repo.stargazers_count} (${repo.language || 'Karışık'})\n`;
           });
+          // eslint-disable-next-line no-unused-vars
         } catch (error) {
           response = 'Projeler çekilirken bir hata oluştu veya limit doldu.';
         }
@@ -235,6 +247,7 @@ const LogicGateSim = () => {
   );
 };
 
+// eslint-disable-next-line no-unused-vars
 const SkillBars = () => (
   <div className="skill-bars">
     <div className="skill">
@@ -572,13 +585,25 @@ function App() {
   const clickCountRef = useRef(0);
   const lastClickTimeRef = useRef(0);
 
-  const handleMouseMove = (e) => {
-    if (!roomRef.current) return;
-    // Fare hareketini doğrudan DOM üzerinden uyguluyoruz, böylece React her karede re-render atıp siteyi kasmaz!
-    const x = (e.clientX / window.innerWidth - 0.5) * 30;
-    const y = (e.clientY / window.innerHeight - 0.5) * 30;
-    roomRef.current.style.transform = `translate(${-x}px, ${-y}px)`;
-  };
+  useEffect(() => {
+    let ticking = false;
+    const handleNativeMouseMove = (e) => {
+      if (!roomRef.current) return;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          if (roomRef.current) {
+            const x = (e.clientX / window.innerWidth - 0.5) * 30;
+            const y = (e.clientY / window.innerHeight - 0.5) * 30;
+            roomRef.current.style.transform = `translate(${-x}px, ${-y}px) translateZ(0)`;
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('mousemove', handleNativeMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleNativeMouseMove);
+  }, []);
 
   const handlePetCat = (e) => {
     e.stopPropagation();
@@ -801,6 +826,10 @@ function App() {
           </div>
         )
       };
+      case 'arcade': return {
+        icon: <Cpu size={28} className="modal-icon" style={{ color: '#bf5af2' }} />, title: "Arcade Makinesi",
+        content: <ArcadeMenu />
+      };
       default: return null;
     }
   };
@@ -831,7 +860,7 @@ function App() {
   );
 
   return (
-    <div className="app-wrapper" onMouseMove={handleMouseMove}>
+    <div className="app-wrapper">
 
       <audio ref={audioRef} src={audioTracks[0].url} loop />
 
@@ -911,6 +940,10 @@ function App() {
               <div className="hud-box story-point postit-think-area" onClick={() => setActiveModal('postit-think')}>
                 <span className="hud-icon">📌</span>
                 <div className="hud-label">Hatırlatma</div>
+              </div>
+              <div className="hud-box arcade-area" onClick={() => setActiveModal('arcade')}>
+                <span className="hud-icon">🕹️</span>
+                <div className="hud-label">Arcade (Oyunlar)</div>
               </div>
 
               {/* Kedi Tıklama Alanı */}
