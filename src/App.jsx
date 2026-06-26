@@ -548,10 +548,10 @@ function App() {
   const [activeModal, setActiveModal] = useState(null);
   const [introStep, setIntroStep] = useState(0);
 
-  // Easter Egg for the teacher
+  // Easter Egg
   useEffect(() => {
     console.log(
-      "%c Sistemin mimarisi ve kedinin sinir katsayısı özenle ayarlandı. İyi okumalar! :) ",
+      "%c Sistemin mimarisi ve kedinin sinir katsayısı özenle ayarlandı. İyi Gezintiler! :) ",
       "background: #141419; color: #32d74b; font-size: 14px; font-weight: bold; border-radius: 4px; padding: 10px; border: 1px solid #32d74b;"
     );
   }, []);
