@@ -413,17 +413,22 @@ const PunchingBagGame = () => {
   };
 
   return (
-    <div className="modern-card center" style={{ padding: '15px', background: 'rgba(0,0,0,0.4)', cursor: 'pointer', userSelect: 'none' }} onClick={handlePunch} title="Stres atmak için hızlıca tıkla!">
+    <div className="modern-card center punching-game-card" style={{ padding: '15px', background: 'rgba(200, 50, 50, 0.15)', border: '1px solid rgba(200, 50, 50, 0.4)', cursor: 'pointer', userSelect: 'none', transition: 'all 0.1s' }} onClick={handlePunch} title="Stres atmak için hızlıca tıkla!">
       <motion.div 
-        animate={isPunching ? { rotate: [0, -20, 20, -10, 10, 0], scale: 1.2 } : { rotate: 0, scale: 1 }}
+        animate={isPunching ? { rotate: [0, -25, 25, -15, 15, 0], scale: 1.05 } : { rotate: 0, scale: 1 }}
         transition={{ duration: 0.15 }}
-        style={{ fontSize: '2.5rem', marginBottom: '10px', display: 'inline-block', transformOrigin: 'top center' }}
+        style={{ marginTop: '15px', marginBottom: '15px', display: 'flex', justifyContent: 'center', transformOrigin: 'top center' }}
       >
-        🥊
+        <div style={{ position: 'relative', width: '35px', height: '60px', background: '#c0392b', borderRadius: '15px 15px 25px 25px', boxShadow: 'inset -5px -5px 15px rgba(0,0,0,0.5), inset 5px 5px 10px rgba(255,255,255,0.2)' }}>
+          {/* Zincir kısmı */}
+          <div style={{ position: 'absolute', top: '-15px', left: '15px', width: '5px', height: '15px', background: '#7f8c8d' }}></div>
+          {/* Torba Detayı (bant) */}
+          <div style={{ position: 'absolute', top: '15px', width: '100%', height: '4px', background: 'rgba(0,0,0,0.3)' }}></div>
+        </div>
       </motion.div>
-      <span style={{ fontWeight: 600, color: '#fff', fontSize: '1.1rem' }}>Boks (Skor: {hits})</span>
-      <span style={{ fontSize: '0.8rem', color: '#86868b', marginTop: '5px' }}>
-        {hits === 0 ? "Stres atmak için tıkla" : hits < 20 ? "Daha sert vur!" : hits < 50 ? "Harika kombo!" : "Tyson mısın mübarek!"}
+      <span style={{ fontWeight: 600, color: '#ff6b6b', fontSize: '1.1rem' }}>Kum Torbası ({hits})</span>
+      <span style={{ fontSize: '0.8rem', color: '#ff9f9f', marginTop: '5px' }}>
+        {hits === 0 ? "Vurmak için tıkla!" : hits < 20 ? "Daha sert vur!" : hits < 50 ? "Harika kombo!" : "Tyson mısın mübarek!"}
       </span>
     </div>
   );
