@@ -56,6 +56,13 @@ const FlappyServoGame = ({ onBack }) => {
 
   const gameLoop = (time) => {
     if (!gameData.current.isPlaying) return;
+    reqRef.current = requestAnimationFrame(gameLoop);
+
+    // Limit to 60 FPS
+    const deltaTime = time - (gameData.current.lastFrameTime || 0);
+    if (deltaTime < 16.6) return;
+    gameData.current.lastFrameTime = time - (deltaTime % 16.6);
+
     const ctx = canvasRef.current.getContext('2d');
     const data = gameData.current;
     const cfg = data.config;
@@ -126,8 +133,6 @@ const FlappyServoGame = ({ onBack }) => {
     ctx.font = '30px sans-serif';
     ctx.fillText('💀', -15, 10);
     ctx.restore();
-
-    reqRef.current = requestAnimationFrame(gameLoop);
   };
 
   useEffect(() => {
@@ -251,6 +256,13 @@ const TyranidSwarmGame = ({ onBack }) => {
 
   const gameLoop = (time) => {
     if (!gameData.current.isPlaying) return;
+    reqRef.current = requestAnimationFrame(gameLoop);
+
+    // Limit to 60 FPS
+    const deltaTime = time - (gameData.current.lastFrameTime || 0);
+    if (deltaTime < 16.6) return;
+    gameData.current.lastFrameTime = time - (deltaTime % 16.6);
+
     const ctx = canvasRef.current.getContext('2d');
     const data = gameData.current;
 
@@ -383,8 +395,6 @@ const TyranidSwarmGame = ({ onBack }) => {
 
       if (e.y > 500) data.enemies.splice(i, 1);
     }
-
-    reqRef.current = requestAnimationFrame(gameLoop);
   };
 
   useEffect(() => {
